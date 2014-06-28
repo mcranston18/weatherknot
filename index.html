@@ -7,11 +7,8 @@
 <div id="main_content_wrapper" class="clearfix">
 <div id="content_wrapper_box">
 
-<link rel="stylesheet" type="text/css" href="weatherKnot.css">
-
-<script type="text/javascript" src="weatherAPI.js"> </script>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
-<script type="text/javascript" src="weatherKnot.js"> </script>
+<script type="text/javascript" src="/scripts/jquery.simpleWeather.js"> </script>
 
 </head>
 
@@ -23,15 +20,15 @@
 
 	<div id="weather"></div>
 
-    
+
 <div>
-	
+
 	<!-- instagram pics -->
 	<div id="instagram"></div>
 	<div class='clearfix'></div>
 	<!-- button -->
 	<div id="showMore">
-		<div class='clearfix '><a id='more' next_url='"+next_url+"' href='#'>[Load More]</a></div>		
+		<div class='clearfix '><a id='more' next_url='"+next_url+"' href='#'>[Load More]</a></div>
 	</div>
 </div>
 
@@ -66,7 +63,7 @@ function loadEmUp(next_url){
 
 	//console.log("loadEmUp url:" + next_url);
 	url = next_url;
-	
+
 	$(function() {
 	    $.ajax({
 		    	type: "GET",
@@ -74,25 +71,25 @@ function loadEmUp(next_url){
 		        cache: false,
 		        url: url ,
 		        success: function(data) {
-		        
+
 		  		next_url = data.pagination.next_url;
 		  		//count = data.data.length;
 		  		//three rows of four
-		  		count = 20; 
-		
+		  		count = 20;
+
 		  		//uncommment to see da codez
 		        //console.log("count: " + count );
 		        //console.log("next_url: " + next_url );
 				//console.log("data: " + JSON.stringify(data) );
-				
+
 	            for (var i = 0; i < count; i++) {
 						if (typeof data.data[i] !== 'undefined' ) {
 						//console.log("id: " + data.data[i].id);
 							$("#instagram").append("<div class='instagram-wrap' id='pic-"+ data.data[i].id +"' ><a target='_blank' href='" + data.data[i].link +"'><span class='likes'>"+data.data[i].likes.count +"</span><img class='instagram-image' src='" + data.data[i].images.low_resolution.url +"' /></a></div>"
-						);  
-						}  
-	      		}     
-		  			  	
+						);
+						}
+	      		}
+
 		  		console.log("next_url: " + next_url);
 		  		$("#showMore").hide();
 		  		if (typeof next_url === 'undefined' || next_url.length < 10 ) {
@@ -100,29 +97,29 @@ function loadEmUp(next_url){
 			  		$("#showMore").hide();
 			  		$( "#more" ).attr( "next_url", "");
 		  		}
-		  		
-		  		
+
+
 	      		else {
 			        //set button value
 			        console.log("displaying more");
 			        $("#showMore").show();
 			        $( "#more" ).attr( "next_url", next_url);
 			        last_url = next_url;
-		      		
+
 	      		}
 	        }
 	    });
 	});
 }
 
-	
+
 
 
 //CALL THE SCRIPT TO START...
 $( document ).ready(function() {
-	
+
 	//APPEND LOAD MORE BUTTON TO THE BODY...
-	$("#more" ).click(function() {  
+	$("#more" ).click(function() {
 		var next_url = $(this).attr('next_url');
 		loadEmUp(next_url);
 		return false;
@@ -131,7 +128,7 @@ $( document ).ready(function() {
 	//start your engines
 	loadEmUp(start_url);
 
-	
+
 });
 
 </script>
@@ -149,7 +146,7 @@ $(document).ready(function() {
       html += '<ul><li>'+weather.city+', '+weather.region+'</li>';
       html += '<li class="currently">'+weather.currently+'</li>';
       html += '<li>'+weather.wind.direction+' '+weather.wind.speed+' '+weather.units.speed+'</li></ul>';
-  
+
       $("#weather").html(html);
     },
     error: function(error) {
